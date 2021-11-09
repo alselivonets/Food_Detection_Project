@@ -1,6 +1,6 @@
 # AI_Project
 
-Nasz projekt ma na celu zmniejszenie odpadów jedzenia na świecie za pomocą technologji Azure Machine Learning Labeling, która pozwoli nam stworzyć narzędzie, które wyznacza typ oraz stan produktu, weryfikując trwałość produktów spożywczych. 
+Nasz projekt ma na celu zmniejszenie odpadów jedzenia na świecie za pomocą technologji Azure Machine Learning Labeling, która pozwoli nam stworzyć narzędzie, które wyznacza typ oraz stan produktów spożywczych, weryfikując ich trwałość. 
 
 Dlaczego to jest taki globalny problem?
 
