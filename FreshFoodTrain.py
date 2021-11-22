@@ -25,6 +25,7 @@ for tagName in dir:
   for img in images:
    with open(os.path.join(training_images,tagName,img), "rb") as image_contents:
     list_of_images.append(ImageFileCreateEntry(name=img, contents=image_contents.read(), tag_ids=[tag.id]))
+    print(list_of_images, tagName)
 
 
 # Create chunks of 64 images
