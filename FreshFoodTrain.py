@@ -1,6 +1,6 @@
 from azure.cognitiveservices.vision.customvision import training
 from azure.cognitiveservices.vision.customvision.training import CustomVisionTrainingClient 
-from azure.cognitiveservices.vision.customvision.training.models import ImageFileCreateEntry
+from azure.cognitiveservices.vision.customvision.training.models import ImageFileCreateEntry, ImageFileCreateBatch
 from msrest.authentication import ApiKeyCredentials
 from msrest.exceptions import HttpOperationError
 
@@ -32,18 +32,19 @@ for tagName in dir:
 
 
 # Create chunks of 64 images
-def chunks(l, n):
- 	for i in range(0, len(l), n):
- 		yield l[i:i + n]
-batchedImages = chunks(list_of_images, 64)
+# def chunks(l, n):
+#  	for i in range(0, len(l), n):
+#  		yield l[i:i + n]
+# batchedImages = chunks(list_of_images, 64)
 
 # Upload the images in batches of 64 to the Custom Vision Service
-for batchOfImages in batchedImages:
-    try:
-     upload_result = trainer.create_images_from_files(project.id, images=batchOfImages)
-    except HttpOperationError as e:
-     print(e.response.text)
-     exit(-1)
+
+for i in range(0, len(list_of_images), 64):
+    #try:
+    upload_result = trainer.create_images_from_files(project.id, ImageFileCreateBatch(list_of_images[i:i+64]))
+    #except HttpOperationError as e:
+    #print(e.response.text)
+    #exit(-1)
  	
   
 # Train the model
