@@ -25,3 +25,26 @@ for tagName in dir:
   for img in images:
    with open(os.path.join(training_images,tagName,img), "rb") as image_contents:
     list_of_images.append(ImageFileCreateEntry(name=img, contents=image_contents.read(), tag_ids=[tag.id]))
+
+
+# Create chunks of 64 images
+def chunks(l, n):
+ 	for i in range(0, len(l), n):
+ 		yield l[i:i + n]
+batchedImages = chunks(list_of_images, 64)
+
+# Upload the images in batches of 64 to the Custom Vision Service
+for batchOfImages in batchedImages:
+ 	upload_result = trainer.create_images_from_files(project.id, images=batchOfImages)
+  
+# Train the model
+iteration = trainer.train_project(project.id)
+while (iteration.status != "Completed"):
+ 	iteration = trainer.get_iteration(project.id, iteration.id)
+ 	print ("Training status: " + iteration.status)
+ 	time.sleep(1)
+
+# Publish the iteration of the model
+publish_iteration_name = '<INSERT ITERATION NAME>'
+resource_identifier = '<INSERT RESOURCE IDENTIFIER>'
+trainer.publish_iteration(project.id, iteration.id, publish_iteration_name, resource_identifier)
