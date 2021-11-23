@@ -32,19 +32,21 @@ for tagName in dir:
 
 
 # Create chunks of 64 images
-# def chunks(l, n):
-#  	for i in range(0, len(l), n):
-#  		yield l[i:i + n]
-# batchedImages = chunks(list_of_images, 64)
+def chunks(l, n):
+ 	for i in range(0, len(l), n):
+ 		yield l[i:i + n]
+batchedImages = chunks(list_of_images, 64)
 
 # Upload the images in batches of 64 to the Custom Vision Service
 
 for i in range(0, len(list_of_images), 64):
-    #try:
-    upload_result = trainer.create_images_from_files(project.id, ImageFileCreateBatch(list_of_images[i:i+64]))
-    #except HttpOperationError as e:
-    #print(e.response.text)
-    #exit(-1)
+    try:
+     upload_result = trainer.create_images_from_files(project.id, batch=ImageFileCreateBatch(images = list_of_images[i:i + 64], tag_ids=[tag.id]))
+     
+    except HttpOperationError as e:
+     print(e.response.text)
+     exit(-1)
+    print("Wait...")
  	
   
 # Train the model
